@@ -1,0 +1,15 @@
+version: "3"
+
+services: 
+  flask_run_nginx: 
+    build: 
+      context: ./flask
+    image: demo1
+  nginx_test:
+    build: 
+      context: ./Nginx
+    image: demo_nginx
+    ports: 
+      - "80:80"
+    links: 
+      - flask_run_nginx

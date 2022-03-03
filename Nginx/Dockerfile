@@ -1,15 +1,21 @@
-FROM ubuntu:18.04
+FROM nginx
 
-RUN apt-get update
+RUN rm /etc/nginx/conf.d/default.conf
 
-RUN apt-get upgrade
+COPY nginx.conf /etc/nginx/conf.d/
 
-RUN apt-get --yes --force-yes install nginx
+# FROM ubuntu:18.04
 
-RUN rm /etc/nginx/sites-enabled/default
+# RUN apt-get update
 
-COPY nginx.conf /etc/nginx/sites-enabled/
+# RUN apt-get upgrade
 
-EXPOSE 80
+# RUN apt-get --yes --force-yes install nginx
 
-CMD service nginx start && tail -f /dev/null
+# RUN rm /etc/nginx/sites-enabled/default
+
+# COPY nginx.conf /etc/nginx/sites-enabled/
+
+# EXPOSE 80
+
+# CMD service nginx start && tail -f /dev/null

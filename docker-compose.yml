@@ -4,12 +4,37 @@ services:
   flask_run_nginx: 
     build: 
       context: ./flask
-    image: demo1
+    links:
+      - db
+    expose:
+      - 3000
+    # image: flasktest
+    # logging:
+    #   driver: awslogs
+    #   options: 
+    #     awslogs-group: tutorial
+    #     awslogs-region: us-east-1
+    #     awslogs-stream-prefix: flask_run_nginx
   nginx_test:
     build: 
       context: ./Nginx
-    image: demo_nginx
+    # image: nginxtest
     ports: 
       - "80:80"
+    # logging:
+    #   driver: awslogs
+    #   options: 
+    #     awslogs-group: tutorial
+    #     awslogs-region: us-east-1
+    #     awslogs-stream-prefix: nginx_test
     links: 
       - flask_run_nginx
+  db:
+    image: mysql
+    environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: mydb
+        MYSQL_USER: user
+        MYSQL_PASSWORD: pass
+    ports:
+        - "30000:3306"
